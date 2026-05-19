@@ -1,0 +1,36 @@
+<?php
+
+namespace App\Models;
+
+use App\Enums\PriorityEnum;
+use App\Enums\StatusEnum;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class Task extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'description',
+        'priority',
+        'status',
+        'due_date',
+        'assigned_to',
+        'ai_summary',
+        'ai_priority',
+    ];
+
+    protected $casts = [
+        'priority' => PriorityEnum::class,
+        'status' => StatusEnum::class,
+        'due_date' => 'date',
+    ];
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'assigned_to');
+    }
+}
