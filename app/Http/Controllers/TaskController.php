@@ -52,19 +52,21 @@ class TaskController extends Controller
             ->with('success', 'Task created successfully');
     }
 
+    
     public function show($id)
     {
-        $this->authorize('view', $task);
         $task = $this->taskService->getTask($id);
+
+        $this->authorize('view', $task);
 
         return view('tasks.show', compact('task'));
     }
 
     public function edit($id)
     {
-        $this->authorize('update', $task);
+        
         $task = $this->taskService->getTask($id);
-
+        $this->authorize('update', $task);
         $users = User::all();
 
         return view('tasks.edit', compact('task', 'users'));
@@ -91,7 +93,10 @@ class TaskController extends Controller
 
     public function destroy($id)
     {
+        $task = $this->taskService->getTask($id);
+
         $this->authorize('delete', $task);
+
         $this->taskService->deleteTask($id);
 
         return redirect()

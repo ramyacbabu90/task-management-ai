@@ -4,6 +4,7 @@ namespace App\Repositories\Eloquent;
 
 use App\Models\Task;
 use App\Repositories\Contracts\TaskRepositoryInterface;
+use Illuminate\Support\Facades\Cache;
 
 class TaskRepository implements TaskRepositoryInterface
 {
@@ -15,9 +16,15 @@ class TaskRepository implements TaskRepositoryInterface
             $query->where('assigned_to', auth()->id());
         }
 
-        return $query
-            ->latest()
-            ->paginate(10);
+        // return $query
+        //     ->latest()
+        //     ->paginate(10);
+
+        return Cache::remember('tasks_' . auth()->id(),60,
+            fn () => $query
+                ->latest()
+                ->paginate(10)
+        );
     }
 
     public function find($id)
@@ -33,7 +40,11 @@ class TaskRepository implements TaskRepositoryInterface
 
     public function create(array $data)
     {
-        return Task::create($data);
+        $task = Task::create($data);
+
+        Cache::forget('tasks_' . auth()->id());
+
+        return $task;
     }
 
     public function update($id, array $data)
@@ -41,14 +52,14 @@ class TaskRepository implements TaskRepositoryInterface
         $task = $this->find($id);
 
         $task->update($data);
-
+        Cache::forget('tasks_' . auth()->id());
         return $task->refresh();
     }
 
     public function delete($id)
     {
         $task = $this->find($id);
-
+        Cache::forget('tasks_' . auth()->id());
         return $task->delete();
     }
 }

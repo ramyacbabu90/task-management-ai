@@ -18,7 +18,7 @@
 @endif
 
 <div class="bg-white rounded shadow p-4">
-
+<div class="overflow-x-auto">
     <table class="w-full">
 
         <thead>
@@ -81,6 +81,17 @@
 
     </table>
 
+    <div class="mt-4">
+    {{ $tasks->links() }}
+</div>
+</div>
 </div>
 
+@endsection
+@section('empty')
+<tr>
+    <td colspan="5" class="p-6 text-center text-gray-500">
+        No tasks available
+    </td>
+</tr>
 @endsection

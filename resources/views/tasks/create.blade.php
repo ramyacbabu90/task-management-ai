@@ -5,7 +5,21 @@
 <h1 class="text-2xl font-bold mb-6">
     Create Task
 </h1>
+@if ($errors->any())
 
+    <div class="bg-red-200 text-red-800 p-4 rounded mb-4">
+
+        <ul class="list-disc ml-5">
+
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+
+        </ul>
+
+    </div>
+
+@endif
 <form action="{{ route('tasks.store') }}"
       method="POST"
       class="bg-white p-6 rounded shadow space-y-4">
@@ -79,7 +93,7 @@
         </select>
     </div>
 
-    <button type="submit"
+    <button type="submit" onclick="this.disabled=true; this.form.submit();"
             class="bg-blue-500 text-white px-4 py-2 rounded">
 
         Save Task

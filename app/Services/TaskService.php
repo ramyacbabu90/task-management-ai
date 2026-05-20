@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
 use App\Repositories\Contracts\TaskRepositoryInterface;
+use App\Jobs\ProcessTaskAIJob;
 
 class TaskService
 {
@@ -23,20 +24,47 @@ class TaskService
         return $this->taskRepository->find($id);
     }
 
+    // public function createTask(array $data)
+    // {
+    //     return DB::transaction(function () use ($data) {
+
+    //         $task = $this->taskRepository->create($data);
+
+    //         $aiData = $this->aiService->generateSummary($task);
+
+    //         return $this->taskRepository->update(
+    //             $task->id,
+    //             $aiData
+    //         );
+    //     });
+    // }
+
     public function createTask(array $data)
     {
         return DB::transaction(function () use ($data) {
 
             $task = $this->taskRepository->create($data);
 
-            $aiData = $this->aiService->generateSummary($task);
+            ProcessTaskAIJob::dispatch($task);
 
-            return $this->taskRepository->update(
-                $task->id,
-                $aiData
-            );
+            return $task;
         });
     }
+
+    // public function updateTask($id, array $data)
+    // {
+    //     return DB::transaction(function () use ($id, $data) {
+
+    //         $task = $this->taskRepository->update($id, $data);
+
+    //         $aiData = $this->aiService->generateSummary($task);
+
+    //         return $this->taskRepository->update(
+    //             $task->id,
+    //             $aiData
+    //         );
+    //     });
+    // }
 
     public function updateTask($id, array $data)
     {
@@ -44,12 +72,9 @@ class TaskService
 
             $task = $this->taskRepository->update($id, $data);
 
-            $aiData = $this->aiService->generateSummary($task);
+            ProcessTaskAIJob::dispatch($task);
 
-            return $this->taskRepository->update(
-                $task->id,
-                $aiData
-            );
+            return $task;
         });
     }
 
