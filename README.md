@@ -127,7 +127,6 @@ app/
 | PHPUnit | Feature & Unit Testing |
 | Vite | Frontend Asset Bundling |
 | Git & GitHub | Version Control |
-```
 
 
 ## 📡 API Endpoints
