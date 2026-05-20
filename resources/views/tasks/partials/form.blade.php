@@ -1,3 +1,6 @@
+@php
+    $isAdmin = auth()->user()->role->value === 'admin';
+@endphp
 @if ($errors->any())
 
     <div class="bg-red-100 border border-red-300 text-red-700 p-4 rounded-2xl mb-6">
@@ -29,7 +32,7 @@
                    name="title"
                    value="{{ old('title', $task->title ?? '') }}"
                    class="w-full border rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                   placeholder="Launch New Marketing Campaign">
+                   placeholder="Launch New Marketing Campaign" @if(!$isAdmin) disabled @endif>
 
         </div>
 
@@ -43,7 +46,7 @@
             <textarea name="description"
                       rows="5"
                       class="w-full border rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      placeholder="Task description...">{{ old('description', $task->description ?? '') }}</textarea>
+                      placeholder="Task description..." @if(!$isAdmin) disabled @endif>{{ old('description', $task->description ?? '') }}</textarea>
 
         </div>
 
@@ -57,7 +60,7 @@
                 </label>
 
                 <select name="priority"
-                        class="w-full border rounded-2xl px-4 py-3">
+                        class="w-full border rounded-2xl px-4 py-3" @if(!$isAdmin) disabled @endif>
 
                     <option value="low"
                         @selected(old('priority', $task->priority->value ?? '') === 'low')>
@@ -85,7 +88,7 @@
                 </label>
 
                 <select name="status"
-                        class="w-full border rounded-2xl px-4 py-3">
+                        class="w-full border rounded-2xl px-4 py-3" >
 
                     <option value="pending"
                         @selected(old('status', $task->status->value ?? '') === 'pending')>
@@ -118,7 +121,7 @@
             <input type="date"
                    name="due_date"
                    value="{{ old('due_date', isset($task) && $task->due_date ? $task->due_date->format('Y-m-d') : '') }}"
-                   class="w-full border rounded-2xl px-4 py-3">
+                   class="w-full border rounded-2xl px-4 py-3" @if(!$isAdmin) disabled @endif>
 
         </div>
 
@@ -130,7 +133,7 @@
             </label>
 
             <select name="assigned_to"
-                    class="w-full border rounded-2xl px-4 py-3">
+                    class="w-full border rounded-2xl px-4 py-3" @if(!$isAdmin) disabled @endif>
 
                 @foreach($users as $user)
 

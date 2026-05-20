@@ -196,18 +196,35 @@ use Illuminate\Support\Str;
             <div class="flex justify-end gap-3">
 
                 <a href="{{ route('tasks.edit', $task->id) }}"
-                   class="bg-gray-200 hover:bg-gray-300 transition px-4 py-2 rounded-xl font-medium text-sm">
+                class="bg-gray-200 hover:bg-gray-300 transition px-4 py-2 rounded-xl font-medium text-sm">
 
                     Edit
 
                 </a>
 
                 <a href="{{ route('tasks.show', $task->id) }}"
-                   class="bg-blue-500 hover:bg-blue-600 transition text-white px-4 py-2 rounded-xl font-medium text-sm">
+                class="bg-blue-500 hover:bg-blue-600 transition text-white px-4 py-2 rounded-xl font-medium text-sm">
 
                     View
 
                 </a>
+                @if(auth()->user()->role->value === 'admin')
+                <form action="{{ route('tasks.destroy', $task->id) }}"
+                    method="POST"
+                    onsubmit="return confirm('Are you sure you want to delete this task?')">
+
+                    @csrf
+                    @method('DELETE')
+
+                    <button type="submit"
+                            class="bg-red-500 hover:bg-red-600 transition text-white px-4 py-2 rounded-xl font-medium text-sm">
+
+                        Delete
+
+                    </button>
+
+                </form>
+                @endif
 
             </div>
 

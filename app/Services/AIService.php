@@ -17,7 +17,7 @@ class AIService
 
                 Return:
                 1. A short professional summary
-                
+                2. Suggested priority:low, medium, or high
 
                 Task Title:
                 {$task->title}

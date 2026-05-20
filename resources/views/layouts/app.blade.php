@@ -31,13 +31,14 @@
                 <h1 class="text-5xl font-bold">
                     @yield('page-title', 'Task Management')
                 </h1>
-
+                @if(auth()->user()->role->value === 'admin')
                 <a href="{{ route('tasks.create') }}"
                    class="bg-blue-500 hover:bg-blue-600 transition px-6 py-3 rounded-xl font-semibold shadow-lg">
 
                     + New Task
 
                 </a>
+                @endif
             </div>
 
             

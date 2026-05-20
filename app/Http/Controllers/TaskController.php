@@ -47,15 +47,6 @@ class TaskController extends Controller
     public function store(StoreTaskRequest $request)
     {
         $validated = $request->validated();
-        // $validated = $request->validate([
-        //     'title' => 'required|string|max:255',
-        //     'description' => 'nullable|string',
-        //     'priority' => 'required',
-        //     'status' => 'required',
-        //     'due_date' => 'nullable|date',
-        //     'assigned_to' => 'required|exists:users,id',
-        // ]);
-
         $this->taskService->createTask($validated);
 
         return redirect()
@@ -86,14 +77,6 @@ class TaskController extends Controller
     public function update(UpdateTaskRequest $request, $id)
     {
         $validated = $request->validated();
-        // $validated = $request->validate([
-        //     'title' => 'required|string|max:255',
-        //     'description' => 'nullable|string',
-        //     'priority' => 'required',
-        //     'status' => 'required',
-        //     'due_date' => 'nullable|date',
-        //     'assigned_to' => 'required|exists:users,id',
-        // ]);
 
         $this->taskService->updateTask($id, $validated);
 

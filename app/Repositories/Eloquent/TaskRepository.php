@@ -118,6 +118,8 @@ class TaskRepository implements TaskRepositoryInterface
     {
         $task = $this->find($id);
         Cache::forget('tasks_' . auth()->id());
-        return $task->delete();
+       return Task::destroy($id);
     }
+
+
 }

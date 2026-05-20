@@ -13,13 +13,31 @@ class UpdateTaskRequest extends FormRequest
 
     public function rules(): array
     {
+        /**
+         * Admin can update everything
+         */
+        if (auth()->user()->role->value === 'admin') {
+
+            return [
+                'title' => 'required|string|max:255',
+
+                'description' => 'nullable|string',
+
+                'priority' => 'required|in:low,medium,high',
+
+                'status' => 'required|in:pending,in_progress,completed',
+
+                'due_date' => 'nullable|date',
+
+                'assigned_to' => 'required|exists:users,id',
+            ];
+        }
+
+        /**
+         * Normal users can update only status
+         */
         return [
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'priority' => 'required|in:low,medium,high',
             'status' => 'required|in:pending,in_progress,completed',
-            'due_date' => 'nullable|date',
-            'assigned_to' => 'required|exists:users,id',
         ];
     }
 }

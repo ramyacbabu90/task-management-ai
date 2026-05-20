@@ -38,7 +38,8 @@ class TaskPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        //return true;
+        return $user->role->value === 'admin';
     }
 
     /**
@@ -54,6 +55,7 @@ class TaskPolicy
      */
     public function delete(User $user, Task $task): bool
     {
-        return $task->assigned_to === $user->id;
+        //return $task->assigned_to === $user->id;
+        return $user->role->value === 'admin';
     }
 }
