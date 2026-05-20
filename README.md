@@ -60,3 +60,71 @@ Repository Interface
 Repository Implementation
    ↓
 Model
+
+
+## 🧱 Architecture Structure
+
+```plaintext
+app/
+├── Enums/
+│
+├── Http/
+│   ├── Controllers/
+│   │   ├── Api/
+│   │   ├── DashboardController.php
+│   │   ├── TaskController.php
+│   │   └── UserController.php
+│   │
+│   ├── Requests/
+│   │   ├── StoreTaskRequest.php
+│   │   └── UpdateTaskRequest.php
+│   │
+│   └── Resources/
+│       └── TaskResource.php
+│
+├── Jobs/
+│   └── ProcessTaskAIJob.php
+│
+├── Models/
+│   ├── Task.php
+│   └── User.php
+│
+├── Policies/
+│   └── TaskPolicy.php
+│
+├── Repositories/
+│   ├── Contracts/
+│   │   └── TaskRepositoryInterface.php
+│   │
+│   └── Eloquent/
+│       └── TaskRepository.php
+│
+├── Services/
+│   ├── AIService.php
+│   ├── DashboardService.php
+│   └── TaskService.php
+│
+└── Providers/
+    └── AuthServiceProvider.php
+```
+
+
+## ⚙️ Tech Stack
+
+| Technology | Usage |
+|---|---|
+| Laravel 10 | Backend Framework |
+| PHP 8.1 | Server-side Programming |
+| MySQL | Database |
+| Blade | Frontend Templating |
+| Tailwind CSS | UI Styling |
+| Chart.js | Dashboard Analytics |
+| Laravel Sanctum | API Authentication |
+| Laravel Queues | Background Job Processing |
+| Gemini API / OpenAI | AI Task Summarization |
+| Repository Pattern | Clean Architecture |
+| Service Layer | Business Logic Separation |
+| PHPUnit | Feature & Unit Testing |
+| Vite | Frontend Asset Bundling |
+| Git & GitHub | Version Control |
+```
