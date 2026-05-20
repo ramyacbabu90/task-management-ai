@@ -128,3 +128,152 @@ app/
 | Vite | Frontend Asset Bundling |
 | Git & GitHub | Version Control |
 ```
+
+
+## 📡 API Endpoints
+
+| Method | Endpoint | Description | Authentication |
+|---|---|---|---|
+| GET | `/api/tasks` | Fetch all tasks | Sanctum |
+| POST | `/api/tasks` | Create a new task | Sanctum |
+| PATCH | `/api/tasks/{id}/status` | Update task status | Sanctum |
+| GET | `/api/tasks/{id}/ai-summary` | Fetch AI-generated summary | Sanctum |
+
+---
+
+## 🔐 API Authentication
+
+Generate token using Laravel Sanctum.
+
+Example Header:
+
+```http
+Authorization: Bearer YOUR_ACCESS_TOKEN
+Accept: application/json
+```
+
+
+# ⚙️ Installation & Setup
+
+## 1. Clone Repository
+
+```bash
+git clone https://github.com/ramyacbabu90/task-management-ai
+(branch master)
+cd task-management-ai
+```
+
+---
+
+## 2. Install Dependencies
+
+```bash
+composer install
+npm install
+```
+
+---
+
+## 3. Environment Setup
+
+```bash
+cp .env.example .env
+```
+
+Update `.env` with:
+- database credentials
+- Gemini/OpenAI API key
+
+Example:
+
+```env
+DB_DATABASE=task_management_ai
+DB_USERNAME=root
+DB_PASSWORD=
+
+QUEUE_CONNECTION=database
+
+GEMINI_API_KEY=your_api_key
+```
+
+---
+
+## 4. Generate Application Key
+
+```bash
+php artisan key:generate
+```
+
+---
+
+## 5. Run Database Migrations
+
+```bash
+php artisan migrate
+```
+
+---
+
+## 6. Seed Database
+
+```bash
+php artisan db:seed
+```
+
+---
+
+## 7. Start Development Server
+
+```bash
+php artisan serve
+```
+
+---
+
+## 8. Start Vite
+
+```bash
+npm run dev
+```
+
+---
+
+## 9. Start Queue Worker
+
+```bash
+php artisan queue:work
+```
+
+AI summaries are processed asynchronously through queues.
+
+---
+
+# 🧪 Run Tests
+
+Run all feature and unit tests:
+
+```bash
+php artisan test
+```
+
+---
+
+# 📡 Test APIs
+
+Generate Sanctum token using Tinker:
+
+```bash
+php artisan tinker
+```
+
+```php
+$user = App\Models\User::first();
+$user->createToken('api-token')->plainTextToken;
+```
+
+Use token in API requests:
+
+```http
+Authorization: Bearer YOUR_ACCESS_TOKEN
+Accept: application/json
+```
