@@ -20,9 +20,20 @@ class TaskController extends Controller
     {
         $this->authorize('viewAny', Task::class);
 
-        $tasks = $this->taskService->getAllTasks();
+        $filters = request()->only([
+            'search',
+            'status',
+            'priority',
+            'assigned_to'
+        ]);
 
-        return view('tasks.index', compact('tasks'));
+        $tasks = $this->taskService->getAllTasks($filters);
+        $users = User::all();
+
+        return view('tasks.index', compact(
+            'tasks',
+            'users'
+        ));
     }
 
     public function create()
